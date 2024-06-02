@@ -1,0 +1,17 @@
+*.iml
+.gradle
+
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+
+/local.properties
+local.properties
+
+# Android Studio
+.idea/
+
+# Google Services (Firebase)
+google-services.json
