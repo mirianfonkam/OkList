@@ -38,5 +38,7 @@ sealed class DetailTaskUiAction {
 
     data class UpdateTaskColorIndicator(val color: Long) : DetailTaskUiAction()
 
+    data object DismissColorView : DetailTaskUiAction()
+
     data class DeleteSubtask(val subtaskUuid: String) : DetailTaskUiAction()
 }

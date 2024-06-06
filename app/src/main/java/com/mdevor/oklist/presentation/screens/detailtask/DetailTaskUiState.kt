@@ -8,6 +8,7 @@ data class DetailTaskUiState(
     val taskColorIndicator: Long = TaskColor.BLUE_INDIGO.color,
     val subtasks: List<SubtaskItemData> = emptyList(),
     val shouldOpenEnableCollabDialog: Boolean = false,
+    val shouldOpenColorSelectionDialog: Boolean = false,
     val isCollabEnabled: Boolean = false,
     val collaboratorEmail: String = "",
     val ownerEmail: String = "",

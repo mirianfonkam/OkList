@@ -33,6 +33,7 @@
     <string name="no_search_result_title">No results found</string>
     <string name="no_search_result_subtitle">Sorry, we could not find the task you are looking for. Please retry using a different search term.</string>
     <string name="done">Done</string>
+    <string name="close">Close</string>
     <string name="dismiss">Dismiss</string>
     <string name="allow_collaborator">Allow Collaborator</string>
     <string name="dashboard">Dashboard</string>

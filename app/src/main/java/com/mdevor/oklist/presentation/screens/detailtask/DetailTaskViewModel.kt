@@ -55,6 +55,7 @@ class DetailTaskViewModel @Inject constructor(
     fun handleViewAction(viewAction: DetailTaskUiAction) {
         when (viewAction) {
             is DetailTaskUiAction.ClickBackButton -> handleBackClick()
+
             is DetailTaskUiAction.UpdateTitle -> handleTitleUpdate(title = viewAction.title)
             is DetailTaskUiAction.AddSubtask -> handleAddSubtask()
             is DetailTaskUiAction.DeleteSubtask -> handleDeleteSubtask(
@@ -62,18 +63,17 @@ class DetailTaskViewModel @Inject constructor(
             )
 
             is DetailTaskUiAction.UpdateSubtaskDescription -> handleSetSubtaskDescription(
-                subtaskUuid = viewAction.subtaskUuid,
-                description = viewAction.description
+                subtaskUuid = viewAction.subtaskUuid, description = viewAction.description
             )
 
             is DetailTaskUiAction.UpdateSubtaskCompletion -> handleToggleSubtaskCompletion(
-                subtaskUuid = viewAction.subtaskUuid,
-                isChecked = viewAction.isChecked
+                subtaskUuid = viewAction.subtaskUuid, isChecked = viewAction.isChecked
             )
 
             is DetailTaskUiAction.UpdateTaskColorIndicator -> handleTaskColorIndicatorUpdate(
-                color = viewAction.color
+                selectedColor = viewAction.color
             )
+
             is DetailTaskUiAction.DeleteTask -> handleTaskDeletion()
             is DetailTaskUiAction.ClickAddCollaborator -> handleAddCollaboratorClick()
             is DetailTaskUiAction.ClickColorPicker -> handleColorPickerClick()
@@ -86,13 +86,17 @@ class DetailTaskViewModel @Inject constructor(
             is DetailTaskUiAction.UpdateCollabEmail -> handleCollabEmailUpdate(
                 email = viewAction.email
             )
+
+            is DetailTaskUiAction.DismissColorView -> handleDismissColorView()
         }
     }
 
+    private fun handleDismissColorView() {
+        _uiState.update { it.copy(shouldOpenColorSelectionDialog = false) }
+    }
+
     private fun handleColorPickerClick() {
-        viewModelScope.launch {
-            // Open color picker dialog - create new ui state
-        }
+        _uiState.update { it.copy(shouldOpenColorSelectionDialog = true) }
     }
 
     private fun handleCollabEmailUpdate(email: String) {
@@ -136,7 +140,6 @@ class DetailTaskViewModel @Inject constructor(
                         )
                     }
                 }
-
             }.onFailure {
                 Log.d("DetailTaskViewModel", "Error loading task: $it")
             }
@@ -148,8 +151,7 @@ class DetailTaskViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             with(_uiState.value) {
                 repository.upsertTask(
-                    TaskRemoteEntity(
-                        id = id,
+                    TaskRemoteEntity(id = id,
                         title = title,
                         color = taskColorIndicator,
                         deadlineDate = "",
@@ -161,8 +163,7 @@ class DetailTaskViewModel @Inject constructor(
                                 description = subtask.description,
                                 completed = subtask.isCompleted
                             )
-                        }
-                    )
+                        })
                 )
             }
             _vmEvent.send(DetailTaskVMEvent.NavigateBack)
@@ -195,9 +196,7 @@ class DetailTaskViewModel @Inject constructor(
     }
 
     private fun createNewSubtask() = SubtaskItemData(
-        uuid = UUID.randomUUID().toString(),
-        description = "",
-        isCompleted = false
+        uuid = UUID.randomUUID().toString(), description = "", isCompleted = false
     )
 
     private fun handleSetSubtaskDescription(subtaskUuid: String, description: String) {
@@ -222,8 +221,10 @@ class DetailTaskViewModel @Inject constructor(
         }
     }
 
-    private fun handleTaskColorIndicatorUpdate(color: Long) {
-
+    private fun handleTaskColorIndicatorUpdate(selectedColor: Long) {
+        _uiState.update {
+            it.copy(taskColorIndicator = selectedColor)
+        }
     }
 
     private fun handleDeleteSubtask(subtaskUuid: String) {

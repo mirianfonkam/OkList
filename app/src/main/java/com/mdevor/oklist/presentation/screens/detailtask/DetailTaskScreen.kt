@@ -197,6 +197,20 @@ private fun DetailTaskScreenContent(
                         },
                     )
                 }
+                if (viewState.shouldOpenColorSelectionDialog) {
+                    TaskColorSelectionDialog(
+                        onDismissClick = { viewAction(DetailTaskUiAction.DismissColorView) },
+                        onColorSelected = { selectedColor ->
+                            viewAction(
+                                DetailTaskUiAction.UpdateTaskColorIndicator(
+                                    color = selectedColor
+                                )
+                            )
+                        },
+                        selectedColor = viewState.taskColorIndicator,
+                    )
+                }
+                
             }
         },
     )
