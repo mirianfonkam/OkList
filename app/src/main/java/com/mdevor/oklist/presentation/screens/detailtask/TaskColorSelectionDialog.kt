@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
@@ -27,6 +28,7 @@ import com.mdevor.oklist.presentation.theme.OkListTheme
 import com.mdevor.oklist.presentation.theme.TaskColor
 import com.mdevor.oklist.presentation.uicomponents.OkDialog
 import com.mdevor.oklist.presentation.uicomponents.OkIconButton
+import com.mdevor.oklist.presentation.uicomponents.OkSimpleTextButton
 
 @Composable
 fun TaskColorSelectionDialog(
@@ -49,6 +51,7 @@ fun TaskColorSelectionDialog(
                 style = MaterialTheme.typography.displayMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
             )
+            Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacing_xx_small)))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,
@@ -61,16 +64,23 @@ fun TaskColorSelectionDialog(
                     )
                 }
             }
-            Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacing_x_small)))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.Bottom,
+            ) {
+                OkSimpleTextButton(
+                    onClick = onDismissClick,
+                    text = stringResource(R.string.close),
+                )
+            }
         }
     }
 }
 
 @Composable
 private fun ColorSelector(
-    color: Long,
-    onColorSelected: (Long) -> Unit,
-    isSelected: Boolean
+    color: Long, onColorSelected: (Long) -> Unit, isSelected: Boolean
 ) {
     Surface(
         border = colorSelectorBorderStroke(isSelected),
@@ -81,8 +91,7 @@ private fun ColorSelector(
     ) {
         if (isSelected) {
             OkIconButton(
-                imageVector = Icons.Rounded.Done,
-                contentDescription = ""
+                imageVector = Icons.Rounded.Done, contentDescription = "",
             )
         }
     }
