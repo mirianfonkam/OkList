@@ -16,4 +16,7 @@ sealed class CreateAccountUiAction {
 
     data object ClickBack : CreateAccountUiAction()
 
+    data object TogglePasswordVisibility : CreateAccountUiAction()
+
+    data object ToggleConfirmPasswordVisibility : CreateAccountUiAction()
 }

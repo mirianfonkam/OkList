@@ -15,4 +15,6 @@ sealed class LoginUiAction {
     ) : LoginUiAction()
 
     data object ClickBack : LoginUiAction()
+
+    data object TogglePasswordVisibility : LoginUiAction()
 }

@@ -36,7 +36,17 @@ class CreateAccountViewModel @Inject constructor(
             is CreateAccountUiAction.ClickRegister -> handleRegisterClick()
             is CreateAccountUiAction.ClickBack -> handleBackClick()
             is CreateAccountUiAction.ClickGoogle -> handleGoogleClick(viewAction.context)
+            is CreateAccountUiAction.TogglePasswordVisibility -> handleTogglePasswordVisibility()
+            is CreateAccountUiAction.ToggleConfirmPasswordVisibility -> handleToggleConfirmPasswordVisibility()
         }
+    }
+
+    private fun handleToggleConfirmPasswordVisibility() {
+        _uiState.update { it.copy(isConfirmPasswordVisible = it.isConfirmPasswordVisible.not()) }
+    }
+
+    private fun handleTogglePasswordVisibility() {
+        _uiState.update { it.copy(isPasswordVisible = it.isPasswordVisible.not()) }
     }
 
     private fun handleConfirmPasswordUpdate(confirmPassword: String) {
@@ -102,6 +112,5 @@ class CreateAccountViewModel @Inject constructor(
                 }
             }
         }
-
     }
 }

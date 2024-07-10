@@ -20,6 +20,7 @@ import com.mdevor.oklist.presentation.screens.login.SocialConnectTitleFooter
 import com.mdevor.oklist.presentation.theme.OkListTheme
 import com.mdevor.oklist.presentation.uicomponents.OkIconButton
 import com.mdevor.oklist.presentation.uicomponents.OkListLogo
+import com.mdevor.oklist.presentation.uicomponents.OkPasswordInputField
 import com.mdevor.oklist.presentation.uicomponents.OkTextButton
 import com.mdevor.oklist.presentation.uicomponents.OkTextInputField
 import com.mdevor.oklist.presentation.uicomponents.OkToolbar
@@ -53,7 +54,10 @@ private fun CreateAccountScreenContent(
     viewState: CreateAccountUiState,
     viewAction: (CreateAccountUiAction) -> Unit,
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
         OkToolbar(
             leadingIcon = {
                 OkIconButton(
@@ -67,24 +71,27 @@ private fun CreateAccountScreenContent(
         OkListLogo()
         Column(
             modifier = Modifier
-                .fillMaxHeight(0.7f)
+                .fillMaxHeight(0.75f)
                 .padding(horizontal = dimensionResource(id = R.dimen.spacing_large)),
-            verticalArrangement = Arrangement.SpaceEvenly,
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacing_x_small)),
         ) {
             OkTextInputField(
                 text = viewState.email,
                 onTextChange = { viewAction(CreateAccountUiAction.UpdateEmail(it)) },
                 labelText = "E-mail",
             )
-            OkTextInputField(
-                text = viewState.password,
-                onTextChange = { viewAction(CreateAccountUiAction.UpdatePassword(it)) },
-                labelText = "Password",
+            OkPasswordInputField(
+                password = viewState.password,
+                onPasswordChange = { viewAction(CreateAccountUiAction.UpdatePassword(it)) },
+                isPasswordVisible = viewState.isPasswordVisible,
+                onVisibilityChange = { viewAction(CreateAccountUiAction.TogglePasswordVisibility) }
             )
-            OkTextInputField(
-                text = viewState.confirmPassword,
-                onTextChange = { viewAction(CreateAccountUiAction.UpdateConfirmPassword(it)) },
-                labelText = "Confirm password"
+            OkPasswordInputField(
+                password = viewState.confirmPassword,
+                onPasswordChange = { viewAction(CreateAccountUiAction.UpdateConfirmPassword(it)) },
+                isPasswordVisible = viewState.isConfirmPasswordVisible,
+                labelText = stringResource(id = R.string.confirm_password),
+                onVisibilityChange = { viewAction(CreateAccountUiAction.ToggleConfirmPasswordVisibility) }
             )
             OkTextButton(
                 text = stringResource(R.string.register),

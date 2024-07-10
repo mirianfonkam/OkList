@@ -74,13 +74,11 @@ fun SocialConnectTitleFooter() {
 fun SocialConnectOptionItemsFooter(
     onGoogleClick: () -> Unit
 ) {
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = dimensionResource(id = R.dimen.spacing_small)),
-        horizontalArrangement =
-        Arrangement.spacedBy(
+            .padding(vertical = dimensionResource(id = R.dimen.spacing_small)),
+        horizontalArrangement = Arrangement.spacedBy(
             space = dimensionResource(id = R.dimen.spacing_medium),
             alignment = Alignment.CenterHorizontally
         )
