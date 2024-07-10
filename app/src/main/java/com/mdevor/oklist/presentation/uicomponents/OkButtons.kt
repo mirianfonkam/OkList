@@ -62,12 +62,14 @@ fun OkIconButton(
     imageVector: ImageVector,
     contentDescription: String,
     onClick: () -> Unit = {},
+    tint: Color = MaterialTheme.colorScheme.onPrimaryContainer
 ) {
     IconButton(
         onClick = { onClick() },
         modifier = modifier,
     ) {
         OkIcon(
+            tint = tint,
             imageVector = imageVector,
             contentDescription = contentDescription,
             modifier = Modifier.size(28.dp)

@@ -34,6 +34,13 @@ class LoginViewModel @Inject constructor(
             is LoginUiAction.ClickGoogle -> handleGoogleClick(viewAction.context)
             is LoginUiAction.ClickRegister -> handleRegisterClick()
             is LoginUiAction.ClickBack -> handleClickBack()
+            is LoginUiAction.TogglePasswordVisibility -> handleTogglePasswordVisibility()
+        }
+    }
+
+    private fun handleTogglePasswordVisibility() {
+        _uiState.update {
+            it.copy(isPasswordVisible = it.isPasswordVisible.not())
         }
     }
 

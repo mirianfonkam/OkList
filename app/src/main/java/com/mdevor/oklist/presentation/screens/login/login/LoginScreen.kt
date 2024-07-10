@@ -21,6 +21,7 @@ import com.mdevor.oklist.presentation.screens.login.SocialConnectTitleFooter
 import com.mdevor.oklist.presentation.theme.OkListTheme
 import com.mdevor.oklist.presentation.uicomponents.OkIconButton
 import com.mdevor.oklist.presentation.uicomponents.OkListLogo
+import com.mdevor.oklist.presentation.uicomponents.OkPasswordInputField
 import com.mdevor.oklist.presentation.uicomponents.OkTextButton
 import com.mdevor.oklist.presentation.uicomponents.OkTextInputField
 import com.mdevor.oklist.presentation.uicomponents.OkToolbar
@@ -52,7 +53,10 @@ private fun LoginScreenContent(
     viewState: LoginUiState,
     viewAction: (LoginUiAction) -> Unit,
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
         OkToolbar(
             leadingIcon = {
                 OkIconButton(
@@ -69,17 +73,18 @@ private fun LoginScreenContent(
                 .padding(horizontal = dimensionResource(id = R.dimen.spacing_large))
                 .fillMaxHeight(0.7f)
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.SpaceEvenly,
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacing_small)),
         ) {
             OkTextInputField(
                 text = viewState.email,
                 onTextChange = { viewAction(LoginUiAction.UpdateEmail(it)) },
                 labelText = "E-mail"
             )
-            OkTextInputField(
-                text = viewState.password,
-                onTextChange = { viewAction(LoginUiAction.UpdatePassword(it)) },
-                labelText = "Password"
+            OkPasswordInputField(
+                password = viewState.password,
+                onPasswordChange = { viewAction(LoginUiAction.UpdatePassword(it)) },
+                isPasswordVisible = viewState.isPasswordVisible,
+                onVisibilityChange = { viewAction(LoginUiAction.TogglePasswordVisibility) }
             )
             OkTextButton(
                 text = stringResource(R.string.sign_in),
